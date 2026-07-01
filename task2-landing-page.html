@@ -473,11 +473,14 @@
 </footer>
 
 <!-- ===== Sticky mobile CTA =====
-     Keyboard/screen-reader users still reach the real submit button in
-     the form above via normal tab order; this bar is a visual/tap
-     convenience layered on top, not a duplicate form. -->
-<div class="sticky-cta" aria-hidden="true">
-  <button type="button" id="sticky-cta-btn">Book My Consultation</button>
+     A real, focusable control - not decorative - so it must NOT carry
+     aria-hidden (an aria-hidden element must never contain a focusable
+     child; that combination hides a reachable control from assistive
+     tech, which is an accessibility violation, not just a style choice).
+     It scrolls to and focuses the real form rather than duplicating
+     submit logic, keeping one source of truth for the conversion. -->
+<div class="sticky-cta">
+  <button type="button" id="sticky-cta-btn" aria-label="Book my consultation — scroll to form">Book My Consultation</button>
 </div>
 
 <script>
