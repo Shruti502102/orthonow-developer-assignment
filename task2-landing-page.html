@@ -3,45 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book an Orthopaedic Consultation | OrthoNow</title>
-<meta name="description" content="Get an expert orthopaedic opinion for knee or back pain. Book a consultation at OrthoNow — 9 clinics across Bengaluru, Hyderabad & Chennai.">
+
+<!-- ===== SEO: title tag + meta description ===== -->
+<title>Get an Expert Orthopaedic Opinion for Knee & Back Pain | OrthoNow</title>
+<meta name="description" content="Book your consultation at OrthoNow — experienced orthopaedic specialists across 9 clinics in Bengaluru, Hyderabad & Chennai. Same-day appointments available.">
+
+<!-- ===== SEO: Open Graph tags ===== -->
+<meta property="og:title" content="Get an Expert Orthopaedic Opinion for Knee & Back Pain | OrthoNow">
+<meta property="og:description" content="Book your consultation at OrthoNow — experienced orthopaedic specialists across 9 clinics with same-day appointments available.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
 
 <!--
-  PERFORMANCE NOTES (for the PageSpeed 90+ Mobile requirement):
-  - No external fonts, no external images, no external scripts, no CDN calls.
-    Every request avoided is milliseconds saved and one less failure point.
-  - System font stack only (ui-serif / -apple-system etc). This renders
-    instantly with zero FOUT/FOIT and zero layout shift from font swapping.
-  - The "goniometer arc" graphic is inline SVG, not a raster image — no
-    image decode cost, scales losslessly, and is themeable via CSS vars.
-  - CSS is inlined in <style> below (single request for the whole page,
-    as required — this file runs standalone with no server).
-  - In a real production deploy, the GTM container snippet
-    (googletagmanager.com/gtm.js) would sit in <head> per Google's install
-    instructions. It's intentionally omitted here: it's a render-blocking
-    external script that would tax the Lighthouse score of this
-    standalone test file, and the assignment only asks for the dataLayer
-    push contract, not a live GTM container. The dataLayer array below is
-    initialized exactly as GTM expects it, so dropping the real snippet in
-    later is a copy-paste, not a rework.
+  PERFORMANCE / PAGESPEED NOTES:
+  - Zero external requests: no fonts, no images, no icon libraries, no CDN
+    scripts. Every avoided request is avoided render-blocking time and one
+    less thing that can fail on a slow mobile connection.
+  - System font stack only -> instant text render, zero font-swap layout
+    shift (this alone protects CLS).
+  - Star rating and badge icons are inline SVG / Unicode characters, not
+    image files -> no image decode cost, crisp at any DPI.
+  - CSS is inlined in a single <style> block (one request total for the
+    whole page, required anyway since this must run from a local file).
+  - No animation libraries and no scroll-triggered motion: the only
+    transitions used are cheap (background-color, transform on :active)
+    which do not trigger layout/paint work that would hurt CLS or INP.
+  - The GTM container script itself (googletagmanager.com/gtm.js) is
+    intentionally NOT included here. It is a render-blocking third-party
+    request that would tax this file's Lighthouse score, and the
+    assignment's requirement is the dataLayer contract, not a live GTM
+    container. window.dataLayer is initialized exactly as GTM expects,
+    so dropping the real snippet into <head> later is a copy-paste away.
 -->
 
 <style>
   :root {
     /* ---- Design tokens ---- */
-    /* Palette: deliberately not cream+terracotta / near-black+neon / broadsheet.
-       Orthopaedics is about restoring motion — the palette leans calm,
-       clinical-but-warm (sage mist + deep ink-teal), with a single warm
-       gold accent reserved only for the action people should take. */
-    --bg:            #F1F4F1;
-    --surface:        #FFFFFF;
-    --ink:            #16302E;
-    --ink-soft:       #4B5D5A;
-    --line:           #D8DED9;
-    --accent:         #E8A33D;
-    --accent-dark:    #CC8A28;
-    --accent-ink:     #3A2405;
-    --danger:         #B3261E;
+    --bg:            #F1F4F1;   /* pale sage - calm, clinical-but-warm */
+    --surface:       #FFFFFF;
+    --ink:           #16302E;   /* deep teal-ink for text */
+    --ink-soft:      #4B5D5A;
+    --line:          #D8DED9;
+    --accent:        #E8A33D;   /* warm gold - reserved for the CTA only */
+    --accent-dark:   #CC8A28;
+    --accent-ink:    #3A2405;
+    --danger:        #B3261E;
+    --star:          #E8A33D;
 
     --font-display: ui-serif, Georgia, "Times New Roman", serif;
     --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -51,6 +58,7 @@
   }
 
   * { box-sizing: border-box; }
+
   html, body {
     margin: 0;
     padding: 0;
@@ -62,25 +70,25 @@
 
   img, svg { display: block; max-width: 100%; }
 
-  a { color: inherit; }
-
-  /* Visible focus for keyboard users — quality floor, not optional */
-  :focus-visible {
+  /* Accessibility: visible focus ring for keyboard users on every
+     interactive element - never remove outline without replacing it. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible {
     outline: 3px solid var(--accent-dark);
     outline-offset: 2px;
   }
 
-  .topbar {
-    display: flex;
-    justify-content: center;
-    padding: 10px 16px;
-    background: var(--ink);
-    color: #EAF2EF;
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    text-align: center;
+  /* Screen-reader-only utility for extra context without visual clutter */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
   }
-  .topbar strong { color: var(--accent); font-weight: 600; }
 
   .wrap {
     max-width: 1100px;
@@ -88,34 +96,23 @@
     padding: 0 20px;
   }
 
-  .hero {
-    position: relative;
-    overflow: hidden;
-    padding: 40px 0 32px;
+  /* ===== Top trust bar ===== */
+  .topbar {
+    background: var(--ink);
+    color: #EAF2EF;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 0.8rem;
   }
+  .topbar strong { color: var(--accent); font-weight: 600; }
+
+  /* ===== Hero ===== */
+  .hero { padding: 36px 0 28px; }
 
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 28px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Decorative goniometer arc — the signature element. A goniometer is the
-     actual clinical instrument orthopaedic specialists use to measure a
-     joint's range of motion. Using it (rather than a generic cross/heart
-     icon) ties the visual identity to this specific medical specialty. */
-  .arc-wrap {
-    position: absolute;
-    top: -60px;
-    right: -80px;
-    width: 360px;
-    opacity: 0.9;
-    pointer-events: none;
-  }
-  @media (max-width: 640px) {
-    .arc-wrap { width: 220px; top: -30px; right: -60px; opacity: 0.55; }
   }
 
   .eyebrow {
@@ -131,25 +128,90 @@
     margin-bottom: 14px;
   }
 
+  /*
+    CRO DECISION: headline is the exact campaign promise the ad copy made.
+    Matching hero headline to ad headline keeps message match high, which
+    both improves Quality Score in Google Ads and reduces the "did I
+    click the wrong thing" bounce in the first 3 seconds on the page.
+  */
   h1 {
     font-family: var(--font-display);
     font-weight: 600;
-    line-height: 1.08;
+    line-height: 1.1;
     letter-spacing: -0.01em;
-    font-size: clamp(1.9rem, 5.4vw, 3.1rem);
+    font-size: clamp(1.85rem, 5.6vw, 3rem);
     margin: 0 0 14px;
-    max-width: 16ch;
+    max-width: 18ch;
   }
 
   .subhead {
     font-size: clamp(1rem, 2.4vw, 1.15rem);
     color: var(--ink-soft);
     max-width: 46ch;
-    margin: 0 0 24px;
+    margin: 0 0 22px;
     line-height: 1.55;
   }
 
-  /* ---- Form card ---- */
+  /* ===== Trust section (stars + stats) =====
+     CRO DECISION: trust proof sits directly beside the form, in the
+     first viewport, because healthcare has high perceived risk - a
+     visitor deciding whether to hand over their phone number needs
+     credibility signals *before* the ask, not after it. */
+  .trust-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 0 22px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .trust-stats .stat { text-align: center; }
+  .trust-stats .stat strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .trust-stats .stat span {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .stars { color: var(--star); font-size: 1.05rem; letter-spacing: 1px; }
+
+  /* ===== Trust badges ===== */
+  .badge-row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 0;
+    margin: 22px 0 0;
+  }
+  .badge-row li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 7px 12px;
+    border-radius: 999px;
+  }
+  .badge-row svg { flex-shrink: 0; }
+
+  /* ===== Form card ===== */
   .form-card {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -158,32 +220,22 @@
     padding: 22px;
     max-width: 440px;
   }
+  .form-card h2 { font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; }
+  .form-card .form-sub { font-size: 0.87rem; color: var(--ink-soft); margin: 0 0 16px; }
 
-  .form-card h2 {
-    font-family: var(--font-body);
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin: 0 0 4px;
-  }
-
-  .form-card .form-sub {
-    font-size: 0.87rem;
-    color: var(--ink-soft);
-    margin: 0 0 16px;
-  }
-
-  .field {
-    margin-bottom: 14px;
-  }
+  .field { margin-bottom: 14px; }
   .field label {
     display: block;
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--ink);
     margin-bottom: 6px;
   }
+  /* Large tap targets: 48px+ minimum height on every input/button,
+     matching mobile accessibility guidance (WCAG target size + Google's
+     own mobile-usability tap-target recommendation). */
   .field input {
     width: 100%;
+    min-height: 48px;
     padding: 13px 14px;
     font-size: 1rem;
     font-family: var(--font-body);
@@ -193,9 +245,7 @@
     color: var(--ink);
   }
   .field input::placeholder { color: #94A29E; }
-  .field input:focus {
-    border-color: var(--accent-dark);
-  }
+  .field input:focus { border-color: var(--accent-dark); }
   .field .error {
     display: none;
     color: var(--danger);
@@ -207,6 +257,7 @@
 
   .cta-btn {
     width: 100%;
+    min-height: 52px;
     padding: 15px 18px;
     font-size: 1.02rem;
     font-weight: 700;
@@ -216,7 +267,9 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: background 120ms ease, transform 120ms ease;
+    /* Only cheap, compositor-friendly properties transition - no layout
+       or paint-triggering animation that could hurt INP/CLS. */
+    transition: background-color 120ms ease, transform 120ms ease;
   }
   .cta-btn:hover { background: var(--accent-dark); }
   .cta-btn:active { transform: scale(0.98); }
@@ -229,57 +282,64 @@
     text-align: center;
   }
 
-  /* ---- Thank-you state (shown after successful submit, no reload) ---- */
-  .thank-you {
-    text-align: left;
-  }
+  /* ===== Thank-you state ===== */
+  .thank-you { text-align: left; }
   .thank-you .check {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: rgba(232,163,61,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     margin-bottom: 12px;
   }
   .thank-you h2 { margin-bottom: 6px; }
-  .thank-you p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.5; margin: 0; }
-
-  /* ---- Trust strip ---- */
-  .trust-strip {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    padding: 0;
-    margin: 26px 0 0;
-  }
-  .trust-strip li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.86rem;
-    color: var(--ink-soft);
-  }
-  .trust-strip li strong { color: var(--ink); font-weight: 700; }
-  .trust-strip svg { flex-shrink: 0; }
+  .thank-you p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.5; margin: 0; }
 
   footer {
-    padding: 22px 0 34px;
+    padding: 22px 0 90px; /* extra bottom padding so sticky CTA never
+                             covers the footer text on mobile */
     text-align: center;
     font-size: 0.76rem;
     color: var(--ink-soft);
+  }
+
+  /* ===== Sticky mobile CTA =====
+     CRO DECISION: on mobile, the primary form sits below a fold-worthy
+     amount of trust content. A sticky bottom bar keeps the conversion
+     action always one thumb-tap away regardless of scroll position -
+     this is the single highest-leverage mobile CRO pattern for
+     long-consideration, high-trust-barrier categories like healthcare. */
+  .sticky-cta {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 20;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 18px rgba(22,48,46,0.08);
+  }
+  .sticky-cta button {
+    width: 100%;
+    min-height: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-body);
+    color: var(--accent-ink);
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 767px) {
+    .sticky-cta { display: block; }
   }
 
   @media (min-width: 860px) {
     .hero-grid {
       grid-template-columns: 1.1fr 0.9fr;
       align-items: start;
-      padding-top: 20px;
     }
     .hero-copy { padding-right: 20px; }
-    .form-card { margin-top: 4px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -290,90 +350,120 @@
 <body>
 
 <div class="topbar">
-  <span><strong>9 clinics</strong>&nbsp;across Bengaluru, Hyderabad &amp; Chennai — same-week appointments available</span>
+  <span><strong>9 clinics</strong>&nbsp;across Bengaluru, Hyderabad &amp; Chennai — same-day appointments available</span>
 </div>
 
 <main class="hero">
   <div class="wrap">
-    <div class="arc-wrap" aria-hidden="true">
-      <!-- Goniometer arc: the tool used to measure a joint's range of motion.
-           Chosen deliberately over a generic medical-cross icon — it's
-           specific to orthopaedics and doubles as a quiet motif for
-           "measured, expert assessment." Purely decorative (aria-hidden). -->
-      <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 190 A150 150 0 0 1 290 190" fill="none" stroke="#16302E" stroke-opacity="0.14" stroke-width="2"/>
-        <path d="M40 190 A150 150 0 0 1 165 40" fill="none" stroke="#E8A33D" stroke-opacity="0.75" stroke-width="3" stroke-linecap="round"/>
-        <g stroke="#16302E" stroke-opacity="0.22" stroke-width="1.5">
-          <line x1="165" y1="40" x2="165" y2="55"/>
-          <line x1="112" y1="47" x2="118" y2="61"/>
-          <line x1="67" y1="76" x2="76" y2="87"/>
-          <line x1="40" y1="120" x2="55" y2="125"/>
-        </g>
-        <circle cx="165" cy="188" r="4" fill="#16302E" fill-opacity="0.5"/>
-        <line x1="165" y1="188" x2="165" y2="40" stroke="#16302E" stroke-opacity="0.3" stroke-width="2"/>
-        <line x1="165" y1="188" x2="290" y2="190" stroke="#16302E" stroke-opacity="0.3" stroke-width="2"/>
-      </svg>
-    </div>
-
     <div class="hero-grid">
+
       <div class="hero-copy">
         <span class="eyebrow">Orthopaedic Consultation</span>
-        <h1>Get an expert opinion on your knee or back pain</h1>
-        <p class="subhead">
-          Persistent joint or back pain doesn't need to wait. Book a consultation
-          with an OrthoNow specialist and get a clear diagnosis and treatment
-          plan — in person, at the clinic nearest you.
-        </p>
 
-        <ul class="trust-strip">
+        <!--
+          CRO DECISION: headline now echoes the actual ad campaign line
+          ("Get an expert orthopaedic opinion – Book your consultation
+          at OrthoNow") almost verbatim, with "knee or back pain" folded
+          in to keep audience relevance. Matching the ad's own words in
+          the hero is the single highest-leverage message-match lever -
+          it confirms to the visitor within 1 second that they clicked
+          the right ad, which is the #1 driver of bounce on paid landing
+          pages. The subheadline then does the trust-building work the
+          headline doesn't have room for (specialists, clinic count,
+          same-day availability).
+        -->
+        <h1>Get an Expert Orthopaedic Opinion for Your Knee or Back Pain</h1>
+        <p class="subhead">Book your consultation at OrthoNow — experienced orthopaedic specialists across 9 clinics, with same-day appointments available.</p>
+
+        <!-- ===== Trust section: rating + stats ===== -->
+        <div class="rating-row">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span>Rated by patients across South India</span>
+        </div>
+
+        <div class="trust-stats" role="group" aria-label="OrthoNow trust statistics">
+          <div class="stat">
+            <strong>10,000+</strong>
+            <span>Patients Treated</span>
+          </div>
+          <div class="stat">
+            <strong>20+</strong>
+            <span>Orthopaedic Specialists</span>
+          </div>
+          <div class="stat">
+            <strong>9</strong>
+            <span>Clinics Across South India</span>
+          </div>
+        </div>
+
+        <!-- ===== Trust badges ===== -->
+        <ul class="badge-row">
           <li>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
-            <span><strong>Board-certified</strong>&nbsp;orthopaedic surgeons</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM12 6v6l4 2"/></svg>
+            Same-Day Appointments
           </li>
           <li>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
-            <span><strong>9 clinics</strong>&nbsp;near you</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2" aria-hidden="true"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+            Experienced Specialists
           </li>
           <li>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM12 6v6l4 2"/></svg>
-            <span><strong>Same-week</strong>&nbsp;appointments</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16302E" stroke-width="2" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+            Multi-City Presence
           </li>
         </ul>
       </div>
 
-      <div class="form-card" id="form-card">
-        <!-- ===== FORM STATE ===== -->
+      <!-- ===== Form card ===== -->
+      <div class="form-card">
         <div id="form-state">
-          <h2>Book your consultation</h2>
+          <h2 id="form-heading">Book your consultation</h2>
           <p class="form-sub">Two details. We'll call you to confirm a slot.</p>
 
-          <form id="consult-form" novalidate>
+          <form id="consult-form" novalidate aria-labelledby="form-heading">
             <div class="field" id="name-field">
               <label for="name">Full name</label>
-              <input type="text" id="name" name="name" placeholder="e.g. Ananya Rao" autocomplete="name">
-              <div class="error" id="name-error">Please enter your name.</div>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="e.g. Ananya Rao"
+                autocomplete="name"
+                aria-required="true"
+                aria-describedby="name-error">
+              <div class="error" id="name-error" role="alert">Please enter your name.</div>
             </div>
 
             <div class="field" id="phone-field">
               <label for="phone">Mobile number</label>
-              <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" inputmode="numeric" autocomplete="tel" maxlength="10">
-              <div class="error" id="phone-error">Please enter a valid 10-digit mobile number.</div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="10-digit mobile number"
+                inputmode="numeric"
+                autocomplete="tel"
+                maxlength="10"
+                aria-required="true"
+                aria-describedby="phone-error">
+              <div class="error" id="phone-error" role="alert">Please enter a valid 10-digit mobile number.</div>
             </div>
 
-            <button type="submit" class="cta-btn" id="submit-btn">Book my consultation</button>
+            <!-- Primary CTA -->
+            <button type="submit" class="cta-btn" id="submit-btn">Book My Consultation</button>
             <p class="form-footnote">By submitting, you agree to be contacted by OrthoNow about your enquiry.</p>
           </form>
         </div>
 
-        <!-- ===== THANK-YOU STATE (hidden until successful submit) ===== -->
-        <div id="thank-you-state" class="thank-you" hidden tabindex="-1">
+        <!-- Thank-you state: hidden until a successful submit swaps it in -->
+        <div id="thank-you-state" class="thank-you" hidden tabindex="-1" role="status" aria-live="polite">
           <div class="check" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A28" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>
           </div>
-          <h2>Request received</h2>
-          <p>Thanks<span id="thank-you-name"></span> — a member of our care team will call you shortly to confirm your consultation slot and preferred clinic.</p>
+          <h2>Thank you!</h2>
+          <p>Our orthopaedic specialist will contact you shortly.</p>
         </div>
       </div>
+
     </div>
   </div>
 </main>
@@ -382,11 +472,24 @@
   <div class="wrap">OrthoNow — Bengaluru · Hyderabad · Chennai. Your information is used only to contact you about this enquiry.</div>
 </footer>
 
+<!-- ===== Sticky mobile CTA =====
+     Keyboard/screen-reader users still reach the real submit button in
+     the form above via normal tab order; this bar is a visual/tap
+     convenience layered on top, not a duplicate form. -->
+<div class="sticky-cta" aria-hidden="true">
+  <button type="button" id="sticky-cta-btn">Book My Consultation</button>
+</div>
+
 <script>
-  // GTM expects window.dataLayer to exist before the container loads.
-  // In production this line ships as part of the GTM snippet itself;
-  // it's declared explicitly here since that snippet isn't included
-  // in this standalone file (see the performance note in <head>).
+  /*
+    ===== GTM IMPLEMENTATION NOTES =====
+    window.dataLayer must exist before GTM's container script loads, so
+    it's initialized here exactly as GTM's own install snippet does it.
+    In production, the real gtm.js snippet would sit in <head> - it is
+    intentionally omitted from this standalone file (see performance
+    notes at the top) so the dataLayer contract can be verified in
+    isolation without a network-dependent third-party script.
+  */
   window.dataLayer = window.dataLayer || [];
 
   (function () {
@@ -400,9 +503,9 @@
     var submitBtn = document.getElementById('submit-btn');
     var formState = document.getElementById('form-state');
     var thankYouState = document.getElementById('thank-you-state');
-    var thankYouName = document.getElementById('thank-you-name');
+    var stickyBtn = document.getElementById('sticky-cta-btn');
 
-    // Basic Indian mobile number pattern: 10 digits, starting 6-9.
+    // Indian mobile number: 10 digits, starting 6-9.
     var PHONE_RE = /^[6-9]\d{9}$/;
 
     function validate() {
@@ -427,43 +530,54 @@
       return isValid;
     }
 
-    // Strip non-digits as the user types so the phone field stays clean
-    // without fighting the user's input (no aggressive re-formatting).
+    // Keep the phone field numeric-only as the user types, without
+    // fighting their input with aggressive re-formatting.
     phoneInput.addEventListener('input', function () {
       phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
     });
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); // never a native/page-reload submit
-
+    function handleSubmit() {
       if (!validate()) {
+        // Move focus to the first invalid field for accessibility.
+        if (nameField.classList.contains('invalid')) {
+          nameInput.focus();
+        } else if (phoneField.classList.contains('invalid')) {
+          phoneInput.focus();
+        }
         return;
       }
 
-      // Prevent double-fires (double click, slow network, etc.)
+      // Guard against double submits (double-click, slow network).
       submitBtn.disabled = true;
       submitBtn.textContent = 'Booking…';
 
-      var nameVal = nameInput.value.trim();
-
-      // ---- The required GTM dataLayer push (fires on submit, not on load) ----
+      // ===== Required dataLayer push (fires on submit, never on load) =====
       window.dataLayer.push({
         event: 'consultation_form_submitted',
-        form_location: 'hero_lp',
-        lead_type: 'consultation_booking',
-        page_path: window.location.pathname
+        lead_source: 'google_ads_consultation_lp',
+        clinic_preference: 'Bengaluru',
+        form_type: 'consultation'
       });
 
-      // Visible in the browser console for the Loom demo:
+      // Visible in the browser console for live verification / demo.
       console.log('dataLayer push:', window.dataLayer[window.dataLayer.length - 1]);
 
-      // Swap to thank-you state, no reload.
+      // Swap to thank-you state - no page reload.
       formState.hidden = true;
       thankYouState.hidden = false;
-      thankYouName.textContent = ', ' + nameVal.split(' ')[0];
+      thankYouState.focus(); // move focus for screen reader / keyboard users
+    }
 
-      // Move focus to the confirmation for screen reader / keyboard users.
-      thankYouState.focus();
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // never a native/page-reload submit
+      handleSubmit();
+    });
+
+    // Sticky mobile CTA scrolls to and focuses the real form instead of
+    // duplicating submit logic - one source of truth for the conversion.
+    stickyBtn.addEventListener('click', function () {
+      nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      nameInput.focus();
     });
   })();
 </script>
