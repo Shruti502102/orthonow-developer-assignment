@@ -1,7 +1,7 @@
 # OrthoNow Developer Assignment — Shruti Srivastava
 
-- [Task 1 — GTM Event Schema](./Task01_GTM_Schema.md)
-- [Task 2 — Landing Page](./task2-landing-page.html) ([PageSpeed screenshot](./pagespeed-screenshot.png))
+- [Task 1 — GTM Event Schema]([./Task01_GTM_Schema.md](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/task1-gtm-event-schema.md)
+- [Task 2 — Landing Page](./task2-landing-page.html) ([PageSpeed screenshot](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg))
 - [Task 3 — Integration Design](#task-03--integration-design-orthonow)
 
 ---
@@ -12,7 +12,7 @@
 - PageSpeed Check link: https://pagespeed.web.dev/analysis/https-shruti502102-github-io-orthonow-developer-assignment-task2-landing-page-html/yykmyynz4v?form_factor=mobile
 - PageSpeed Mobile score: 100 Performance / 96 Accessibility / 100 Best Practices / 100 SEO
 
-![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg)
+
 
 ![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%206.25.02%20PM.jpeg)
 
