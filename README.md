@@ -1,6 +1,6 @@
 # OrthoNow Developer Assignment — Shruti Srivastava
 
-- [Task 1 — GTM Event Schema]([./Task01_GTM_Schema.md](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/task1-gtm-event-schema.md)
+- [Task 1 — GTM Event Schema](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/task1-gtm-event-schema.md)
 - [Task 2 — Landing Page](./task2-landing-page.html) ([PageSpeed screenshot](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg))
 - [Task 3 — Integration Design](#task-03--integration-design-orthonow)
 
