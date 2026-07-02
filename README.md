@@ -1,4 +1,3 @@
-# orthonow-developer-assignment
 # OrthoNow Developer Assignment — Shruti Srivastava
 
 - [Task 1 — GTM Event Schema](./Task01_GTM_Schema.md)
