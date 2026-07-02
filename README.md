@@ -12,7 +12,7 @@
 - PageSpeed Check link: https://pagespeed.web.dev/analysis/https-shruti502102-github-io-orthonow-developer-assignment-task2-landing-page-html/yykmyynz4v?form_factor=mobile
 - PageSpeed Mobile score: 100 Performance / 96 Accessibility / 100 Best Practices / 100 SEO
 
-
+![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg)
 
 ![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%206.25.02%20PM.jpeg)
 
