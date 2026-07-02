@@ -12,9 +12,9 @@
 - Source file: [task2-landing-page.html](./task2-landing-page.html)
 - PageSpeed Mobile score: 100 Performance / 96 Accessibility / 100 Best Practices / 100 SEO
 
-![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg)
+![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg)
 
-![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/WhatsApp%20Image%202026-07-02%20at%206.25.02%20PM.jpeg)
+![PageSpeed Insights Mobile score](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%206.25.02%20PM.jpeg)
 
 # Task 03 — Integration Design (OrthoNow → HubSpot → WhatsApp → Google Ads)
 
