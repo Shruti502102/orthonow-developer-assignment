@@ -3,7 +3,7 @@
 - [Task 1 — GTM Event Schema](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/task1-gtm-event-schema.md)
 - [Task 2 — Landing Page](./task2-landing-page.html) ([PageSpeed screenshot](https://github.com/Shruti502102/orthonow-developer-assignment/blob/main/photo/WhatsApp%20Image%202026-07-02%20at%2012.04.13%20AM.jpeg))
 - [Task 3 — Integration Design](#task-03--integration-design-orthonow)
-- loom Live video page: https://shruti502102.github.io/orthonow-developer-assignment/task2-landing-page.html
+- loom Live video link: https://www.loom.com/share/e41182004c0c4a4288fa4e8c7261c80b
 
 ---
 ## Task 2 — Landing Page
